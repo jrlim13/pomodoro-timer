@@ -22,7 +22,6 @@ class Timer extends React.Component {
             tab.running = false;
             this.setState(tab);
         }
-        
     };
 
     toggleRun = () => {
@@ -71,7 +70,12 @@ class Timer extends React.Component {
                             {
                                 tabs.map((tab, i) =>
                                     <li key={i} className="w-full">
-                                        <button className={`inline-block relative py-4 px-4 w-full text-sm font-medium text-center text-beige bg-peach-100/30 hover:bg-peach-200 focus:ring-1 focus:ring-beige ${i === 0 ? "rounded-l-lg" : ""} ${i === tabs.length - 1 ? "rounded-r-lg" : ""}`} onClick={this.toggleTab.bind(this, tab)}>{tab.tab}</button>
+                                        <button
+                                            className={`inline-block relative py-4 px-4 w-full text-sm font-medium text-center ${tab.tab === this.state.tab ? "text-red bg-beige" : "text-beige bg-peach-100/30 hover:bg-peach-200"} ${i === 0 ? "rounded-l-lg" : ""} ${i === tabs.length - 1 ? "rounded-r-lg" : ""}`}
+                                            onClick={this.toggleTab.bind(this, tab)}
+                                        >
+                                            {tab.tab}
+                                        </button>
                                     </li>
                                 )
                             }

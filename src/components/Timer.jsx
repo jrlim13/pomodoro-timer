@@ -64,7 +64,7 @@ class Timer extends React.Component {
     render() {
         return (
             <main>
-                <div className="timer-container">
+                <div className="w-fit mx-auto">
                     <div className="h-80 bg-peach-100/30 rounded-lg">
                         <ul className="flexrounded-lg rounded-lg divide-x divide-gray-200 shadow flex">
                             {

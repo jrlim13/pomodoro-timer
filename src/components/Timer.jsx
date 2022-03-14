@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Timer.css'
 import keyboardSound from '../assets/audio/Keyboard press - Sound Effect-PXkIBbkbJCk.mp3'
+import alarmSound from '../assets/audio/iPhone Radar Alarm_Ringtone (Apple Sound) - Sound Effect for Editing-kcT-i9xzC-8.mp3';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -15,14 +16,15 @@ class Timer extends React.Component {
             running: false,
             timerId: 0
         };
-        this.audio = new Audio(keyboardSound);
+        this.click = new Audio(keyboardSound);
+        this.alarm = new Audio(alarmSound);
     }
-    
-    playSound = () => {
-        this.audio.play();
-        if (this.audio.paused === false) {
-            this.audio.currentTime = 0;
-        } 
+
+    playSound = (audio) => {
+        audio.play();
+        if (audio.paused === false) {
+            audio.currentTime = 0;
+        }
     };
 
     toggleTab = (tab) => {
@@ -34,13 +36,23 @@ class Timer extends React.Component {
     };
 
     toggleRun = () => {
-        this.playSound();
+        this.playSound(this.click);
         if (!this.state.running) {
             const timerId = setInterval(() => {
                 this.setState(state => {
                     if (this.state.minutes === 0 && this.state.seconds === 0) {
                         clearInterval(timerId);
+                        let playPromise = this.alarm.play();
                         alert("Time's up!");
+
+                        if (playPromise !== undefined) {
+                            playPromise.then(_ => {
+                                this.alarm.pause();
+                            }).catch(error => {
+                                console.log(error);
+                            });
+                        }
+
                         const searchedTab = tabs.find(tab => tab.tab === this.state.tab);
                         return ({ ...searchedTab, running: !state.running, timerId: 0 })
                     }
@@ -64,7 +76,7 @@ class Timer extends React.Component {
         clearInterval(this.state.timerId);
         const searchedTab = tabs.find(tab => tab.tab === this.state.tab);
         this.setState({ ...searchedTab, running: false, timerId: 0 });
-        this.playSound();
+        this.playSound(this.click);
     };
 
     iconStyles = {

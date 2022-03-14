@@ -35,6 +35,7 @@ class Timer extends React.Component {
     };
 
     toggleRun = () => {
+        this.playSound();
         if (!this.state.running) {
             const timerId = setInterval(() => {
                 this.setState(state => {
@@ -58,8 +59,6 @@ class Timer extends React.Component {
             clearInterval(this.state.timerId);
             this.setState(state => ({ running: !state.running, timerId: 0 }));
         }
-
-        this.playSound();
     };
 
     toggleReset = () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/Timer.css'
+import keyboardSound from '../assets/audio/Keyboard press - Sound Effect-PXkIBbkbJCk.mp3'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -15,6 +16,15 @@ class Timer extends React.Component {
             timerId: 0
         };
     }
+
+    
+    playSound = () => {
+        this.audio = new Audio(keyboardSound);
+        this.audio.play();
+        if (this.audio.paused == false) {
+            this.audio.currentTime = 0;
+        } 
+    };
 
     toggleTab = (tab) => {
         if (tab.tab !== this.state.tab) {
@@ -49,12 +59,14 @@ class Timer extends React.Component {
             this.setState(state => ({ running: !state.running, timerId: 0 }));
         }
 
+        this.playSound();
     };
 
     toggleReset = () => {
         clearInterval(this.state.timerId);
         const searchedTab = tabs.find(tab => tab.tab === this.state.tab);
         this.setState({ ...searchedTab, running: false, timerId: 0 });
+        this.playSound();
     };
 
     iconStyles = {

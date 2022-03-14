@@ -15,13 +15,12 @@ class Timer extends React.Component {
             running: false,
             timerId: 0
         };
+        this.audio = new Audio(keyboardSound);
     }
-
     
     playSound = () => {
-        this.audio = new Audio(keyboardSound);
         this.audio.play();
-        if (this.audio.paused == false) {
+        if (this.audio.paused === false) {
             this.audio.currentTime = 0;
         } 
     };

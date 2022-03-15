@@ -10,3 +10,14 @@
     box-shadow: none;
     transform: translateY(4px);
 }
+
+@media only screen and (max-width: 640px) {
+    .tc-width {
+        width: max-content;
+    }
+
+    .t-text {
+        font-size: 5.5rem; /* 60px */
+        line-height: 1;
+    }
+}

@@ -102,7 +102,7 @@ class Timer extends React.Component {
                                 )
                             }
                         </ul>
-                        <div className="p-8 text-9xl font-semibold">{this.state.minutes.toString().padStart(2, 0)} : {this.state.seconds.toString().padStart(2, 0)} </div>
+                        <div className="t-text whitespace-nowrap p-8 text-9xl font-semibold">{this.state.minutes.toString().padStart(2, 0)} : {this.state.seconds.toString().padStart(2, 0)} </div>
                         <div className="relative">
                             <button className="px-8 text-red bg-beige rounded-md btn-animation" onClick={this.toggleRun}>{this.state.running ? <PauseIcon style={this.iconStyles} /> : <PlayArrowIcon style={this.iconStyles} />}</button>
                             <button className="p-1 text-red bg-beige rounded-md absolute right-3 bottom-0 btn-animation" onClick={this.toggleReset}><RestartAltIcon /></button>

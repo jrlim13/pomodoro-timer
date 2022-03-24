@@ -7,7 +7,6 @@ import alarmSound from '../assets/audio/iPhone Radar Alarm_Ringtone (Apple Sound
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { fontSize } from '@mui/system';
 
 function TimerFunctional() {
 
@@ -25,14 +24,10 @@ function TimerFunctional() {
             dispatch({ type: "reduce" });
     }, 1000);
 
-    // useEffect(() => {
-    //     timerId.current = setInterval(() => { dispatch({ type: "reduce" }) }, 1000);
-    //     return () => {
-    //         clearInterval(timerId.current);
-    //     }
-    // }, [state.running])
+    const [play] = useSound(keyboardSound);
 
     const toggleRun = () => {
+        play();
         if (!state.running)
             dispatch({ type: "run" });
         else {
@@ -41,6 +36,7 @@ function TimerFunctional() {
     }
 
     const toggleReset = () => {
+        play();
         dispatch({ type: "stop" });
         const searchedTab = tabs.find(tab => tab.tab === state.tab);
         dispatch({ type: "reset", payload: searchedTab })
@@ -109,7 +105,7 @@ const reducer = (state, action) => {
 
 const tabs = [
     { tab: "Pomodoro", minutes: 25, seconds: 0 },
-    { tab: "Short Break", minutes: 0, seconds: 1 },
+    { tab: "Short Break", minutes: 5, seconds: 0 },
     { tab: "Long Break", minutes: 30, seconds: 0 }
 ];
 

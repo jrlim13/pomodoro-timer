@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from 'react';
+import React, { useState, useReducer, useRef } from 'react';
 import { useInterval } from 'beautiful-react-hooks';
 import useSound from 'use-sound';
 import '../styles/Timer.css'
@@ -15,7 +15,8 @@ function TimerFunctional() {
         minutes: tabs[0].minutes,
         seconds: tabs[0].seconds,
         running: false,
-        timerId: 0
+        timerId: 0,
+        ctr: 4
     });
     const timerId = useRef(0);
 
@@ -68,7 +69,7 @@ function TimerFunctional() {
                     </ul>
                     <div className="t-text whitespace-nowrap p-8 text-9xl font-semibold">{state.minutes.toString().padStart(2, 0)} : {state.seconds.toString().padStart(2, 0)} </div>
                     <div className="relative">
-                        <button className="px-8 text-red bg-beige rounded-md btn-animation" onClick={toggleRun}>{state.running ? <PauseIcon style={{ fontSize: "50px" }} /> : <PlayArrowIcon style={{ fontSize: "50px" }} />}</button>
+                        <button data-testid="btn-play-pause" className="px-8 text-red bg-beige rounded-md btn-animation" onClick={toggleRun}>{state.running ? <PauseIcon style={{ fontSize: "50px" }} /> : <PlayArrowIcon style={{ fontSize: "50px" }} />}</button>
                         <button className="p-1 text-red bg-beige rounded-md absolute right-3 bottom-0 btn-animation" onClick={toggleReset}><RestartAltIcon /></button>
                     </div>
                 </div>
@@ -88,8 +89,18 @@ const reducer = (state, action) => {
         case "reduce":
             if (state.minutes === 0 && state.seconds === 0) {
                 alert("Time's up!");
-                const searchedTab = tabs.find(tab => tab.tab === state.tab);
-                return { ...state, ...searchedTab, running: false };
+                // const searchedTab = tabs.find(tab => tab.tab === state.tab);
+                
+                if (state.tab === "Pomodoro" && state.ctr % 4 == 0) {
+                    const currentTab = tabs[2];
+                    return { ...state, ...currentTab, running: false };
+                } else if (state.tab === "Short Break" || state.tab === "Long Break") {
+                    const currentTab = tabs[0];
+                    return { ...state, ...currentTab, running: false };
+                }
+
+                const currentTab = tabs[1];
+                return { ...state, ...currentTab, running: false };
             }
             if (state.seconds === 0) {
                 return { ...state, minutes: state.minutes - 1, seconds: 59 };

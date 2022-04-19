@@ -1,8 +1,22 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, getByTestId, render, screen } from '@testing-library/react';
 import App from './App';
+import TimerFuncitonal from './components/TimerFunctional';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.useFakeTimers();
+
+test('Play to pause btn', () => {
+  const { getByTestId } = render(<App />);
+  const toggleButton = getByTestId("btn-play-pause")
+  fireEvent.click(toggleButton);
+  const pauseBtn = getByTestId("PauseIcon");
+
+  expect(toggleButton).toContainElement(pauseBtn)
+});
+
+test('Timer tick', () => {
+  const { getByTestId } = render(<App />);
+  const toggleButton = getByTestId("btn-play-pause")
+  fireEvent.click(toggleButton);
+
+  jest.time
 });

@@ -16,7 +16,7 @@ function TimerFunctional() {
         seconds: tabs[0].seconds,
         running: false,
         timerId: 0,
-        ctr: 4
+        ctr: 1
     });
     const timerId = useRef(0);
 
